@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
-    
+
     // Safety tabs functionality
     const tabButtons = document.querySelectorAll('.tab-btn');
     const tabs = document.querySelectorAll('.tab');

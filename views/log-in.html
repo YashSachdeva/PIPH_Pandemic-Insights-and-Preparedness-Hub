@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pandemic Response - Login</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="shortcut icon" href="/images/logo.png" type="image/x-icon" />
+    <link rel="stylesheet" href="/css/log-in.css" />
+  </head>
+  <body>
+    <section class="login-section">
+      <div class="login-container" id="login-container">
+        <h1>Log In</h1>
+        <form id="login-form">
+          <div class="input-group">
+            <i class="fa-solid fa-envelope"></i>
+            <input type="email" id="login-email" placeholder="Email" required />
+            <span id="login-email-status" class="status-icon hidden">✔</span>
+            <span id="login-email-error" class="error-message"></span>
+          </div>
+          <div class="input-group">
+            <i class="fa-solid fa-lock"></i>
+            <input
+              type="password"
+              id="login-password"
+              placeholder="Password"
+              required
+            />
+            <img
+              id="toggle-login-password"
+              src="/images/show-password.png"
+              alt="Show Password"
+              class="toggle-password"
+            />
+            <span id="login-password-error" class="error-message"></span>
+          </div>
+          <button type="submit" class="login-btn">Log In</button>
+        </form>
+        <p>
+          <a href="#" id="forgot-password-link" class="forgot-password"
+            >Forgot Password?</a
+          >
+        </p>
+        <p>
+          Don't have an account?
+          <a href="/signup" class="signup-link">Sign Up</a>
+        </p>
+      </div>
+
+      <div class="login-container hidden" id="forgot-password-container">
+        <h1>Forgot Password</h1>
+        <form id="forgot-password-form">
+          <div class="input-group">
+            <i class="fa-solid fa-envelope"></i>
+            <input
+              type="email"
+              id="forgot-email"
+              placeholder="Enter your email"
+              required
+            />
+            <span id="forgot-email-error" class="error-message"></span>
+          </div>
+          <button type="submit" class="login-btn">Send OTP</button>
+        </form>
+        <p>
+          <a href="#" id="back-to-login" class="signup-link">Back to Login</a>
+        </p>
+      </div>
+
+      <div class="login-container hidden" id="otp-container">
+        <h1>Verify OTP</h1>
+        <form id="otp-form">
+          <div class="otp-inputs">
+            <input type="text" maxlength="1" class="otp-block" required />
+            <input type="text" maxlength="1" class="otp-block" required />
+            <input type="text" maxlength="1" class="otp-block" required />
+            <input type="text" maxlength="1" class="otp-block" required />
+            <input type="text" maxlength="1" class="otp-block" required />
+            <input type="text" maxlength="1" class="otp-block" required />
+          </div>
+          <span id="otp-error" class="error-message"></span>
+          <button type="submit" class="login-btn">Verify OTP</button>
+        </form>
+        <p>
+          <a href="#" id="back-to-forgot" class="signup-link">Resend OTP</a>
+        </p>
+      </div>
+
+      <div class="login-container hidden" id="reset-password-container">
+        <h1>Reset Password</h1>
+        <form id="reset-password-form">
+          <div class="input-group">
+            <i class="fa-solid fa-lock"></i>
+            <input
+              type="password"
+              id="new-password"
+              placeholder="New Password"
+              required
+            />
+            <img
+              id="toggle-new-password"
+              src="show-password.png"
+              alt="Show Password"
+              class="toggle-password"
+            />
+            <span id="new-password-error" class="error-message"></span>
+          </div>
+          <div class="input-group">
+            <i class="fa-solid fa-lock"></i>
+            <input
+              type="password"
+              id="confirm-password"
+              placeholder="Confirm Password"
+              required
+            />
+            <img
+              id="toggle-confirm-password"
+              src="/images/show-password.png"
+              alt="Show Password"
+              class="toggle-password"
+            />
+            <span id="confirm-password-error" class="error-message"></span>
+          </div>
+          <button type="submit" class="login-btn">Reset Password</button>
+        </form>
+      </div>
+    </section>
+
+    <div class="popup" id="popup">
+      <span class="popup-text" id="popup-text"></span>
+      <button class="close-popup" id="close-popup">Close</button>
+    </div>
+
+    <footer class="footer">
+      <p>© 2025 Pandemic Response. All Rights Reserved.</p>
+      <div class="footer-links">
+        <a href="/privacy">Privacy Policy</a>
+        <a href="/terms">Terms of Service</a>
+        <a href="/contact">Contact Us</a>
+      </div>
+    </footer>
+
+    <script src="/js/log-in.js"></script>
+  </body>
+</html>
