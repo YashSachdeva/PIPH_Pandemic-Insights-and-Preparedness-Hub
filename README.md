@@ -84,7 +84,7 @@ This project is licensed under the **MIT License**.
 
 ## 📬 Contact
 For any queries or collaboration, feel free to connect:
-- **GitHub:** [SunilBaghel002](https://github.com/SunilBaghel002)
+- **GitHub:** [Yash]((https://github.com/YashSachdeva))
 - **Live Site:** [Pandemic Insights and Preparedness Hub](https://pandemic-insights-and-prepareness-hub.vercel.app/)
 
 
