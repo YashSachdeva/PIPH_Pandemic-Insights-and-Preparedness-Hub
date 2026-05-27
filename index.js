@@ -291,7 +291,7 @@ app.get("/user-dashboard", (req, res) =>
 );
 
 const allowedEmails = [
-  "sunilnp@acem.edu.in",
+  "yash.sachdeva@acem.edu.in",
   "ofcsatyam007@gmail.com",
   "vanshajs11@gmail.com",
 ];
