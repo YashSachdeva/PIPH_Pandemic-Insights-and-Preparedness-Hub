@@ -6,7 +6,7 @@
 [Click here to visit the live site](https://pandemic-insights-and-prepareness-hub-piph-rmk7.vercel.app/)
 
 ## Repository
-[GitHub Repository](https://github.com/SunilBaghel002/Pandemic-Insights-and-Prepareness-Hub)
+[GitHub Repository](https://github.com/YashSachdeva/PIPH_Pandemic-Insights-and-Preparedness-Hub)
 
 ## About the Project
 The **Pandemic Insights and Preparedness Hub** is a real-time dashboard providing crucial data and tools to help individuals, organizations, and governments respond to pandemics effectively. The platform integrates live statistics, predictive analytics, resource allocation, and volunteer coordination for a comprehensive response system.
@@ -44,12 +44,12 @@ To set up the project locally, follow these steps:
 
 1. Clone the repository:
    ```sh
-   git clone https://github.com/SunilBaghel002/Pandemic-Insights-and-Prepareness-Hub.git
+   git clone https://github.com/YashSachdeva/PIPH_Pandemic-Insights-and-Preparedness-Hub.git
    ```
 
 2. Navigate to the project folder:
    ```sh
-   cd Pandemic-Insights-and-Prepareness-Hub
+   cd PIPH_Pandemic-Insights-and-Preparedness-Hub
    ```
 
 3. Install dependencies:
@@ -84,7 +84,7 @@ This project is licensed under the **MIT License**.
 
 ## 📬 Contact
 For any queries or collaboration, feel free to connect:
-- **GitHub:** [Yash]((https://github.com/YashSachdeva))
+- **GitHub:** [Yash](https://github.com/YashSachdeva)
 - **Live Site:** [Pandemic Insights and Preparedness Hub](https://pandemic-insights-and-prepareness-hub.vercel.app/)
 
 
