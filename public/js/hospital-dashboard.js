@@ -1033,3 +1033,4 @@ function updatePandemicChart() {
 
   pandemicChart.update();
 }
+

@@ -18,7 +18,7 @@ async function fetchProfile() {
     return;
   }
   try {
-    const response = await fetch("http://localhost:5000/api/user/profile", {
+    const response = await fetch("/api/user/profile", {
       method: "GET",
       headers: { Authorization: token },
     });
@@ -30,7 +30,7 @@ async function fetchProfile() {
     document.getElementById("phone").value = data.phone || "";
     if (data.photo) {
       document.getElementById("profilePic").src =
-        "http://localhost:5000/" + data.photo;
+        "/" + data.photo;
     }
     // Update sidebar
     updateSidebarProfile(data);
@@ -59,7 +59,7 @@ async function saveChanges() {
     formData.append("photo", selectedFile);
   }
   try {
-    const response = await fetch("http://localhost:5000/api/user/update", {
+    const response = await fetch("/api/user/update", {
       method: "POST",
       headers: { Authorization: token },
       body: formData,
@@ -130,7 +130,7 @@ function updateSidebarProfile(data) {
   const userName = document.getElementById("user-name");
   const userEmail = document.getElementById("user-email");
   if (userPhoto && data.photo)
-    userPhoto.src = "http://localhost:5000/" + data.photo;
+    userPhoto.src = "/" + data.photo;
   if (userName) userName.textContent = data.name || "User Name";
   if (userEmail) userEmail.textContent = data.email || "user@example.com";
 }
@@ -187,3 +187,4 @@ function updateBadges(data) {
 document.addEventListener("DOMContentLoaded", function () {
   fetchProfile();
 });
+

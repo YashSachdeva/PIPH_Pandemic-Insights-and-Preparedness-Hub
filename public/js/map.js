@@ -38,7 +38,8 @@ const apiKey = "foJwrzIhpx6buK7dBC0P"; // MapTiler API Key
       }
 
       function connectWebSocket() {
-        ws = new WebSocket("ws://localhost:5000");
+        const wsProtocol = location.protocol === "https:" ? "wss" : "ws";
+        ws = new WebSocket(`${wsProtocol}://${location.host}`);
 
         ws.onopen = () => {
           console.log("Connected to WebSocket server");
@@ -126,7 +127,7 @@ const apiKey = "foJwrzIhpx6buK7dBC0P"; // MapTiler API Key
 
         try {
           const response = await fetch(
-            `http://localhost:5000/api/reverse?lat=${lat}&lon=${lon}`
+            `/api/reverse?lat=${lat}&lon=${lon}`
           );
           if (response.status === 429 && retries > 0) {
             await new Promise((resolve) => setTimeout(resolve, delay));

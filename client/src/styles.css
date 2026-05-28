@@ -1,0 +1,27 @@
+html,
+body,
+#root {
+  min-height: 100%;
+  margin: 0;
+}
+
+.react-page-status {
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  padding: 24px;
+  color: #183153;
+  font-family: Arial, sans-serif;
+}
+
+.react-page-status h1 {
+  margin: 0 0 8px;
+}
+
+.react-page-status p {
+  margin: 0;
+}
+
+.react-hidden {
+  display: none;
+}

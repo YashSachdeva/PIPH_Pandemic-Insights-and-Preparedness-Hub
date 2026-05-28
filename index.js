@@ -1,4 +1,5 @@
 const express = require("express");
+const http = require("http");
 const nodemailer = require("nodemailer");
 const axios = require("axios");
 const bcrypt = require("bcryptjs");
@@ -16,10 +17,19 @@ const { createObjectCsvWriter } = require("csv-writer");
 
 const app = express();
 dotenv.config();
-const port = 5000;
+const port = Number(process.env.PORT) || 5000;
+const server = http.createServer(app);
+const jwtSecret = process.env.JWT_SECRET || "piph-local-development-secret";
+
+function getAuthToken(req) {
+  const header = req.headers["authorization"];
+  if (!header) return null;
+  return header.startsWith("Bearer ") ? header.slice(7) : header;
+}
+
 app.use(
   cors({
-    origin: "https://pandemic-insights-and-prepareness-hub-piph-rmk7.vercel.app/", // Allow your frontend URL
+    origin: true,
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true,
   })
@@ -32,7 +42,7 @@ if (!fs.existsSync(uploadsDir)) {
 }
 
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'http://localhost:5000');
+  res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.header('Access-Control-Allow-Headers', 'Content-Type');
   next();
@@ -165,6 +175,7 @@ const requestSchema = new mongoose.Schema({
     default: "pending",
   },
   paymentId: { type: String },
+  rationCard: { type: String },
   location: { type: String },
   userEmail: { type: String },
   createdAt: { type: Date, default: Date.now },
@@ -244,50 +255,64 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
 
+const clientDistDir = path.join(__dirname, "client", "dist");
+const reactIndex = path.join(clientDistDir, "index.html");
+
+app.use(express.static(clientDistDir));
+app.use("/legacy-pages", express.static(path.join(__dirname, "views")));
+
+function sendReactApp(res, fallbackFile) {
+  if (fs.existsSync(reactIndex)) {
+    return res.sendFile(reactIndex);
+  }
+
+  return res.sendFile(path.join(__dirname, "views", fallbackFile));
+}
+
 app.get("/", (req, res) =>
-  res.sendFile(path.join(__dirname, "/views/home.html"))
+  sendReactApp(res, "home.html")
 );
 app.get("/login", (req, res) =>
-  res.sendFile(path.join(__dirname, "/views/log-in.html"))
+  sendReactApp(res, "log-in.html")
 );
 app.get("/signup", (req, res) =>
-  res.sendFile(path.join(__dirname, "/views/sign-up.html"))
+  sendReactApp(res, "sign-up.html")
 );
 app.get("/firstPage", (req, res) =>
-  res.sendFile(path.join(__dirname, "/views/firstPage.html"))
+  sendReactApp(res, "firstPage.html")
 );
 app.get("/map", (req, res) =>
-  res.sendFile(path.join(__dirname, "/views/map.html"))
+  sendReactApp(res, "map.html")
 );
 app.get("/request", (req, res) =>
-  res.sendFile(path.join(__dirname, "/views/request.html"))
+  sendReactApp(res, "request.html")
 );
 app.get("/admin", (req, res) =>
-  res.sendFile(path.join(__dirname, "/views/manageRequest.html"))
+  sendReactApp(res, "manageRequest.html")
 );
 app.get("/pandamic", (req, res) =>
-  res.sendFile(path.join(__dirname, "/views/pandamic.html"))
+  sendReactApp(res, "pandamic.html")
 );
 app.get("/alerts", (req, res) =>
-  res.sendFile(path.join(__dirname, "/views/alert.html"))
+  sendReactApp(res, "alert.html")
 );
 app.get("/hospital-dashboard", (req, res) =>
-  res.sendFile(path.join(__dirname, "/views/hospital-dashboard.html"))
+  sendReactApp(res, "hospital-dashboard.html")
 );
 app.get("/organizations", (req, res) =>
-  res.sendFile(path.join(__dirname, "/views/organizations.html"))
+  sendReactApp(res, "organizations.html")
 );
 app.get("/org-dashboard", (req, res) =>
-  res.sendFile(path.join(__dirname, "/views/org-dashboard.html"))
+  sendReactApp(res, "org-dashboard.html")
 );
 app.get("/stats", (req, res) =>
-  res.sendFile(path.join(__dirname, "/views/stats.html"))
+  sendReactApp(res, "stats.html")
 );
 app.get("/profile", (req, res) =>
-  res.sendFile(path.join(__dirname, "/views/updateProfile.html"))
+  sendReactApp(res, "updateProfile.html")
 );
 app.get("/user-dashboard", (req, res) =>
-  res.sendFile(path.join(__dirname, "/views/user-dashboard.html"))
+  sendReactApp(res, "user-dashboard.html")
 );
 
 const allowedEmails = [
@@ -326,11 +351,25 @@ app.get("/admin", (req, res) => {
   }
 });
 
-const server = app.listen(5000, () =>
-  console.log("Server running on port 5000")
-);
+let fallbackPortAttempted = false;
+
+function handleStartupError(error) {
+  if (error.code === "EADDRINUSE" && error.port === 5000 && fallbackPortAttempted) {
+    return;
+  }
+
+  if (error.code === "EADDRINUSE" && port === 5000 && !fallbackPortAttempted) {
+    fallbackPortAttempted = true;
+    console.error("Port 5000 is already in use. Trying port 5001...");
+    server.listen(5001, () => console.log("Server running on port 5001"));
+  } else {
+    console.error("Server error:", error);
+    process.exit(1);
+  }
+}
 
 const wss = new WebSocket.Server({ server });
+wss.on("error", handleStartupError);
 
 let hospitalClients = [];
 let orgClients = []; // Added for organization notifications
@@ -2209,22 +2248,23 @@ app.get("/api/hospitals", async (req, res) => {
   res.json(hospitals);
 });
 
+app.get(/^\/(?!api|legacy-pages|images|css|js|uploads).*/, (req, res, next) => {
+  if (!fs.existsSync(reactIndex)) {
+    return next();
+  }
+
+  res.sendFile(reactIndex);
+});
+
 // Utility Function: Generate OTP
 function generateOTP() {
   return crypto.randomInt(100000, 999999).toString();
 }
 
-// Start the Server
-server.on("error", (error) => {
-  if (error.code === "EADDRINUSE") {
-    console.error(`Port 5000 is already in use. Trying port 5001...`);
-    server.listen(5001, () => console.log(`Server running on port 5001`));
-  } else {
-    console.error("Server error:", error);
-    process.exit(1);
+server.on("error", handleStartupError);
+
+server.listen(port, () => {
+  if (!fallbackPortAttempted) {
+    console.log(`Server running on port ${port}`);
   }
 });
-
-// app.listen(port, () => {
-//   console.log(`Server starts at port ${port}`);
-// });

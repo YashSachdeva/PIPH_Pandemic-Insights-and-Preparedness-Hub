@@ -434,3 +434,4 @@ function observeSections() {
 document.getElementById("close-btn2").addEventListener("click", () => {
   document.getElementById("weatherWidget").style.display = "none";
 });
+

@@ -471,7 +471,7 @@ function resetForms() {
 
 async function fetchOrganizations() {
   try {
-    const response = await fetch("http://localhost:5000/api/organizations");
+    const response = await fetch("/api/organizations");
     if (!response.ok) throw new Error("Failed to fetch organizations");
     const orgs = await response.json();
     const orgList = document.getElementById("org-list");
@@ -510,7 +510,7 @@ async function submitVolunteer(data) {
     return;
   }
   try {
-    const response = await fetch("http://localhost:5000/api/volunteer/signup", {
+    const response = await fetch("/api/volunteer/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -671,7 +671,7 @@ if (window.location.pathname === "/user-dashboard") {
 // Org Listing Functions
 async function loadOrganizations() {
   try {
-    const response = await fetch("http://localhost:5000/api/organizations");
+    const response = await fetch("/api/organizations");
     if (!response.ok) throw new Error("Failed to fetch organizations");
     const orgs = await response.json();
     const grid = document.getElementById("org-grid");
@@ -747,7 +747,7 @@ async function joinOrganization(orgId) {
   if (!name || !email) return;
 
   try {
-    const response = await fetch("http://localhost:5000/api/volunteer/signup", {
+    const response = await fetch("/api/volunteer/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -775,7 +775,7 @@ async function loadOrgDashboard() {
   }
 
   try {
-    const response = await fetch("http://localhost:5000/api/org/dashboard", {
+    const response = await fetch("/api/org/dashboard", {
       headers: { Authorization: token },
     });
     // if (!response.ok) throw new Error("Failed to load dashboard");
@@ -840,7 +840,7 @@ async function manageVolunteer(volunteerId, action) {
   const token = localStorage.getItem("token");
   try {
     const response = await fetch(
-      `http://localhost:5000/api/org/volunteer/${action}`,
+      `/api/org/volunteer/${action}`,
       {
         method: "POST",
         headers: {
@@ -865,7 +865,7 @@ async function assignTask(volunteerId) {
 
   try {
     const response = await fetch(
-      "http://localhost:5000/api/org/volunteer/task",
+      "/api/org/volunteer/task",
       {
         method: "POST",
         headers: {
@@ -909,7 +909,7 @@ async function handleEventFormSubmit(e) {
   };
 
   try {
-    const response = await fetch("http://localhost:5000/api/org/event", {
+    const response = await fetch("/api/org/event", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -942,7 +942,7 @@ async function handleOrgProfileSubmit(e) {
   }
 
   try {
-    const response = await fetch("http://localhost:5000/api/org/profile", {
+    const response = await fetch("/api/org/profile", {
       method: "POST",
       headers: { Authorization: token },
       body: formData,
@@ -967,7 +967,7 @@ async function loadUserDashboard() {
   }
 
   try {
-    const response = await fetch("http://localhost:5000/api/user/dashboard", {
+    const response = await fetch("/api/user/dashboard", {
       headers: { Authorization: token },
     });
     // if (!response.ok) throw new Error("Failed to load dashboard");
@@ -1036,3 +1036,4 @@ async function loadUserDashboard() {
     showPopupMessage("Failed to load dashboard.");
   }
 }
+

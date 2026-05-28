@@ -9,13 +9,13 @@ function updateSidebarProfile() {
     const token = localStorage.getItem("token");
     if (!token) return;
 
-    fetch("http://localhost:5000/api/user/profile", {
+    fetch("/api/user/profile", {
         headers: { "Authorization": token }
     })
     .then(response => response.json())
     .then(data => {
         if (data.photo) {
-            document.getElementById("user-photo").src = "http://localhost:5000/" + data.photo;
+            document.getElementById("user-photo").src = "/" + data.photo;
         }
         document.getElementById("user-name").textContent = data.name || "User Name";
         document.getElementById("user-email").textContent = data.email || "user@example.com";
@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
   
-    fetch("http://localhost:5000/api/user/profile", {
+    fetch("/api/user/profile", {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((response) => {

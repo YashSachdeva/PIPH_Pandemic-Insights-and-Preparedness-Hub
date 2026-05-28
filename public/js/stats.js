@@ -559,3 +559,4 @@ async function exportReport() {
 
   doc.save("pandemic_report.pdf");
 }
+

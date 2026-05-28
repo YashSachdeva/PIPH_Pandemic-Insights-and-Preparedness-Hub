@@ -1,5 +1,5 @@
 // Resource data
-const API_URL = "http://localhost:5000"; // Adjust as needed
+const API_URL = ""; // Adjust as needed
 const resources = {
   food: [
     {

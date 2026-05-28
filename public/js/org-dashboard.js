@@ -108,7 +108,7 @@ function toggleNotifications() {
 // Fetch Overview Data
 async function fetchOverview() {
   try {
-    const response = await fetch("http://localhost:5000/api/org/overview", {
+    const response = await fetch("/api/org/overview", {
       headers: { Authorization: localStorage.getItem("token") },
     });
     const data = await response.json();
@@ -128,7 +128,7 @@ async function fetchOverview() {
 // Fetch Volunteers and Chart
 async function fetchVolunteers() {
   try {
-    const response = await fetch("http://localhost:5000/api/org/volunteers", {
+    const response = await fetch("/api/org/volunteers", {
       headers: { Authorization: localStorage.getItem("token") },
     });
     const volunteers = await response.json();
@@ -196,7 +196,7 @@ async function fetchVolunteers() {
 // Fetch Events and Calendar
 async function fetchEvents() {
   try {
-    const response = await fetch("http://localhost:5000/api/org/events", {
+    const response = await fetch("/api/org/events", {
       headers: { Authorization: localStorage.getItem("token") },
     });
     const events = await response.json();
@@ -241,7 +241,7 @@ async function fetchEvents() {
 // Fetch Tasks
 async function fetchTasks() {
   try {
-    const response = await fetch("http://localhost:5000/api/org/tasks", {
+    const response = await fetch("/api/org/tasks", {
       headers: { Authorization: localStorage.getItem("token") },
     });
     const tasks = await response.json();
@@ -271,7 +271,7 @@ async function fetchTasks() {
 // Fetch Resources
 async function fetchResources() {
   try {
-    const response = await fetch("http://localhost:5000/api/org/resources", {
+    const response = await fetch("/api/org/resources", {
       headers: { Authorization: localStorage.getItem("token") },
     });
     const resources = await response.json();
@@ -309,7 +309,7 @@ async function fetchProfile() {
       return;
     }
 
-    const response = await fetch("http://localhost:5000/api/org/profile", {
+    const response = await fetch("/api/org/profile", {
       headers: { Authorization: `Bearer ${token}` }, // Ensure Bearer prefix
     });
 
@@ -348,7 +348,7 @@ document.getElementById("event-form").addEventListener("submit", async (e) => {
     date: document.getElementById("event-date").value,
   };
   try {
-    const response = await fetch("http://localhost:5000/api/org/events", {
+    const response = await fetch("/api/org/events", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -374,7 +374,7 @@ document.getElementById("task-form").addEventListener("submit", async (e) => {
     description: document.getElementById("task-description").value,
   };
   try {
-    const response = await fetch("http://localhost:5000/api/org/tasks", {
+    const response = await fetch("/api/org/tasks", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -402,7 +402,7 @@ document
     formData.append("logo", document.getElementById("org-logo").files[0]);
     formData.append("bio", document.getElementById("org-bio").value);
     try {
-      const response = await fetch("http://localhost:5000/api/org/profile", {
+      const response = await fetch("/api/org/profile", {
         method: "POST",
         headers: { Authorization: localStorage.getItem("token") },
         body: formData,
@@ -419,7 +419,7 @@ document
 // Fetch Organizations for Join Modal
 async function fetchOrganizationsForJoin() {
   try {
-    const response = await fetch("http://localhost:5000/api/organizations");
+    const response = await fetch("/api/organizations");
     const orgs = await response.json();
     const orgList = document.getElementById("org-list");
     orgList.innerHTML = "";
@@ -445,7 +445,7 @@ async function fetchOrganizationsForJoin() {
 // Populate Task Volunteers
 async function populateTaskVolunteers() {
   try {
-    const response = await fetch("http://localhost:5000/api/org/volunteers", {
+    const response = await fetch("/api/org/volunteers", {
       headers: { Authorization: localStorage.getItem("token") },
     });
     const volunteers = await response.json();
@@ -466,7 +466,7 @@ async function populateTaskVolunteers() {
 // Submit Volunteer Form
 async function submitVolunteer(data) {
   try {
-    const response = await fetch("http://localhost:5000/api/volunteer/signup", {
+    const response = await fetch("/api/volunteer/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -578,3 +578,4 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
+

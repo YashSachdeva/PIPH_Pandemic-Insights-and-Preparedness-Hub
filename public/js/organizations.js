@@ -115,7 +115,7 @@ function contactFromDetails() {
 async function fetchOrganizations(append = false) {
   try {
     const response = await fetch(
-      `http://localhost:5000/api/organizations?page=${page}&limit=${orgsPerPage}`
+      `/api/organizations?page=${page}&limit=${orgsPerPage}`
     );
     const orgs = await response.json();
     const orgGrid = document.getElementById("org-grid");
@@ -262,7 +262,7 @@ async function joinOrganization(orgId) {
   }
   try {
     const response = await fetch(
-      "http://localhost:5000/api/volunteer/join-org",
+      "/api/volunteer/join-org",
       {
         method: "POST",
         headers: {
@@ -291,7 +291,7 @@ async function contactOrganization(orgId) {
 // Fetch Organizations for Join Modal
 async function fetchOrganizationsForJoin() {
   try {
-    const response = await fetch("http://localhost:5000/api/organizations");
+    const response = await fetch("/api/organizations");
     const orgs = await response.json();
     const orgList = document.getElementById("org-list");
 
@@ -324,7 +324,7 @@ async function submitVolunteer(data) {
     return;
   }
   try {
-    const response = await fetch("http://localhost:5000/api/volunteer/signup", {
+    const response = await fetch("/api/volunteer/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -489,3 +489,4 @@ document.addEventListener("DOMContentLoaded", () => {
       await submitVolunteer(data);
     });
 });
+

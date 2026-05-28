@@ -23,7 +23,8 @@ The **Pandemic Insights and Preparedness Hub** is a real-time dashboard providin
 
 ## Tech Stack
 ### Frontend:
-- **HTML, CSS, JavaScript** – Core technologies for the user interface.
+- **React.js with Vite** – Main frontend application shell and page routing.
+- **HTML, CSS, JavaScript** – Existing page templates and browser scripts now loaded through React.
 - **Chart.js** – Used for dynamic data visualization.
 - **Leaflet.js** – For interactive maps and geolocation.
 - **Font Awesome** – For icons and UI enhancements.
@@ -54,7 +55,7 @@ To set up the project locally, follow these steps:
 
 3. Install dependencies:
    ```sh
-   npm install express mongoose
+   npm install
    ```
 
 4. Create a `.env` file and add API keys:
@@ -66,10 +67,21 @@ To set up the project locally, follow these steps:
 
 5. Start the development server:
    ```sh
+   npm run dev
+   ```
+
+6. Open your browser and visit the React app:
+   ```
+   http://localhost:5173
+   ```
+
+7. For production mode, build React and start Express:
+   ```sh
+   npm run build
    npm start
    ```
 
-6. Open your browser and visit:
+8. Open the production server:
    ```
    http://localhost:5000
    ```
